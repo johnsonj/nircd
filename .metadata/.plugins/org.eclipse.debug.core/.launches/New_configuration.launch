@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.chromium.debug.ui.LaunchType$StandaloneV8">
+<booleanAttribute key="add_network_console" value="true"/>
+<stringAttribute key="breakpoint_startup_sync_direction" value="MERGE"/>
+<intAttribute key="debug_port" value="5858"/>
+</launchConfiguration>

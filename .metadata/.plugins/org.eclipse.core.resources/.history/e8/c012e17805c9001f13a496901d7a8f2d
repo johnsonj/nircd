@@ -1,0 +1,35 @@
+var net = require('net');
+var enterprise = require('../enterprise/enterprise.js');
+enterprise.setup({AppName: 'irc.js', Version: '0.0.000.1', Exceptions: {Handle: true, DieOnUncaughtException: false}, Log: {Console: true, File: false}}); 
+var log = enterprise.log;
+
+var config = {NetworkName: 'RelayRace', PortNumber: 3918};
+
+net.createServer(function (socket) { 
+	log("Client connected");
+	socket.setEncoding("utf8");
+	socket.write("200");
+	socket.on("data", handleData);
+	socket.on("end", function () { 
+		socket.end();
+		log("Client disconnected");
+	});
+}).listen(config.PortNumber);
+
+log(' - Server listening on port: ' + config.PortNumber);
+
+function handleData(data) {
+	log('> Processing: ' + data);
+	data = new String(data);
+	data = data.split(' ', 2);
+	for (var i; i < data.length; i++) {
+		var lineData = new String(data[i]);
+		var command = lineData.split(' ')[0];
+		if (command == 'NICK') {
+			log(' - Nickname change request');
+		}
+		else {
+			log(' > Command unknown: ' + command);
+		}
+	}
+}

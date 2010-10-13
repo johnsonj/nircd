@@ -1,0 +1,25 @@
+var net = require('net');
+var enterprise = require('./enterprise');
+enterprise.setup({AppName: 'irc.js', Version: '0.0.000.1', Exceptions: {Handle: true, DieOnUncaughtException: false}, Log: {Console: true, File: false}}); 
+var log = enterprise.log;
+
+var config = {NetworkName: 'RelayRace', PortNumber: 6667};
+
+net.createServer(function (socket) { 
+	log("Client connected");
+	socket.setEncoding("utf8");
+	socket.write("200");
+	socket.on("data", function (data) {
+		if (data[0] == "NICK") {
+			log("Goes by the name of " + data[0]);
+		} else {
+			log(data);
+		}
+	});
+	socket.on("end", function () { 
+		socket.end();
+		log("Client disconnected");
+	});
+}).listen(8124);
+
+log('Server listening on port: ' + 6667);

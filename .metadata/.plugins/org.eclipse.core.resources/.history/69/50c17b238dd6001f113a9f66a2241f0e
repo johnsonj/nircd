@@ -2,7 +2,6 @@ var net = require('net');
 var enterprise = require('../enterprise/enterprise.js');
 enterprise.setup({AppName: 'irc.js', Version: '0.0.000.1', Exceptions: {Handle: true, DieOnUncaughtException: false}, Log: {Console: true, File: false}}); 
 var log = enterprise.log;
-global.log = log;
 
 var config = {NetworkName: 'RelayRace', PortNumber: 3918};
 
@@ -12,7 +11,7 @@ net.createServer(function (socket) {
 	socket.setEncoding("utf8");
 	socket.write("200");
 	user = require('./userman.js');
-	user.init(socket);
+	
 	
 	socket.on("data", function dataClick(data) {
 		log('> Processing: ' + data);
@@ -21,18 +20,18 @@ net.createServer(function (socket) {
 		for (var i = 0; i < data.length; i++) {
 			var lineData = new String(data[i]);
 			var command = lineData.slice(0, lineData.indexOf(' ', 0));
-			var parameters = lineData.slice(lineData.indexOf(' ', 0) + 1, -1);
-			var personalCommandObject = {cmd: command, param: parameters};
+			var param = lineData.slice(lineData.indexOf(' ', 0), -1);
 			switch (command) {
-				case 'NICK':
+			
+			case 'NICK':
 				case 'USER':
-					user.personalCommand(personalCommandObject);
+					user.personalCommand();
 				break;
 					
 				default:
 					log(' - Unknown Command');
 				break;
-			};
+			}
 		}
 	});
 	

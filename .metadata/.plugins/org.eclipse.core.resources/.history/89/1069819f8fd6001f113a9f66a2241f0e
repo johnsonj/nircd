@@ -1,0 +1,30 @@
+/**
+ * 
+ */
+
+
+(function() {
+	var socket = null;
+	var roomsList = null;
+	
+	var personalInfo = {username: 'Default', email: 'de@fau.lt'};
+	
+	var events = require('events').EventEmmiter;
+	
+	global.log("Hello from the userman");
+	
+	exports.init = function(sock, rooms) { socket = sock; roomsList = rooms; };
+	
+	exports.personalCommand = function(data) {
+		global.log("Handling: " + data.cmd + " with: " + data.param);
+		switch (data.cmd) {
+			case 'NICK':
+				// Do verify here
+				personalInfo.username = param;
+				socket.write('Okay, your name is now: ' + personalInfo.username);
+				
+			break;
+		
+		}
+	};
+});

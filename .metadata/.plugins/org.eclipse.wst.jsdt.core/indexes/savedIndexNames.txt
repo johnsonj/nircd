@@ -1,0 +1,4 @@
+INDEX VERSION 1.122+/home/jeffrey/nirc/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1953384190.index
+1191430560.index
+752535688.index

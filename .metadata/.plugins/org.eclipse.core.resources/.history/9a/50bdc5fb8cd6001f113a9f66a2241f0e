@@ -1,0 +1,17 @@
+/**
+ * 
+ */
+
+
+(function() {
+	var socket = null;
+	var personalInfo = {username: 'Default', email: 'de@fau.lt'};
+	
+	var events = require('events').EventEmmiter;
+	
+	exports.init = function(sock) { socket = sock; };
+	
+	exports.personalCommand = function(data) {
+		socket.write("Handling: " + data.cmd);
+	};
+});
